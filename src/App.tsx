@@ -15,6 +15,7 @@ import { NurseryScene } from './scenes/NurseryScene'
 import { SecretScene } from './scenes/SecretScene'
 import { SparkleTrail } from './components/SparkleTrail'
 import { lullabyPlayer } from './utils/lullabyAudio'
+import { recordVisit, recordDiscoveredItem } from './utils/visitorMemory'
 
 const sceneNarration: Partial<Record<SceneId, AudioNarrationId>> = {
   arrival: 'arrival',
@@ -115,6 +116,13 @@ export default function App() {
   }, [activeScene, muted, unlocked, playAmbient])
 
   useEffect(() => {
+    const visit = recordVisit()
+    if (visit.isReturnVisit && visit.greeting) {
+      setStoryWhisper(visit.greeting)
+    }
+  }, [])
+
+  useEffect(() => {
     const narrationId = sceneNarration[activeScene]
     if (!narrationId || muted || !unlocked || playedNarrations.has(narrationId)) return
     if (skipNextNarration.current === narrationId) {
@@ -156,6 +164,7 @@ export default function App() {
     lastInteractionAt.current = now
     incrementInteractionCount()
     setActivatedObjects((previous) => new Set(previous).add(objectId))
+    recordDiscoveredItem(objectId)
     const story = objectStories[objectId]
     if (!story) return
     reactPip(story.state)
@@ -182,6 +191,7 @@ export default function App() {
   const revealSecret = useCallback(() => {
     unlockAudio()
     setDiscoveredSecret(true)
+    recordDiscoveredItem('secretStar')
     reactPip('happy', 3000)
     setStoryWhisper('Pip tucks the tiny star safely under its heart.')
     playSpecial('secretReveal')
