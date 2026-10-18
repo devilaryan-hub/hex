@@ -297,3 +297,118 @@ button.object-art__moon:focus-visible {
 .star-1 { top: 18%; left: 52%; }
 .star-2 { bottom: 38%; right: 18%; }
 .star-3 { top: 72%; left: 68%; }
+
+/* 8. Dream Delivery Map */
+.dream-map {
+  width: 100%;
+  background: #131933;
+  border: 1.5px solid var(--amber);
+  border-radius: 8px;
+  padding: 18px;
+  box-shadow: 4px 4px 0px var(--amber);
+  margin-top: 18px;
+}
+
+.dream-map__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.dream-map__title {
+  margin: 0;
+  font: 400 20px/1.1 var(--display-retro);
+  color: var(--amber);
+}
+
+.dream-map__subtitle {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.dream-map__close-btn {
+  padding: 5px 12px;
+  background: var(--night-blue);
+  border: 1px solid var(--amber);
+  border-radius: 4px;
+  color: var(--cream);
+  font-size: 10px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px var(--amber);
+}
+
+.dream-map__close-btn:hover {
+  background: var(--amber);
+  color: var(--midnight);
+}
+
+.dream-map__svg-wrapper {
+  width: 100%;
+  overflow: hidden;
+  background: #0d1226;
+  border: 1px solid rgba(165, 160, 200, 0.3);
+  border-radius: 6px;
+}
+
+.dream-map__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+}
+
+.dream-map__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(242, 189, 120, 0.2);
+}
+
+.dream-map__status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dream-map__badge {
+  padding: 3px 7px;
+  background: var(--deep-navy);
+  border: 1px solid var(--amber);
+  border-radius: 3px;
+  color: var(--amber);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dream-map__label {
+  color: var(--cream);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.dream-map__nav {
+  display: flex;
+  gap: 8px;
+}
+
+.dream-map__nav-btn {
+  padding: 6px 14px !important;
+  font-size: 9px !important;
+  min-height: 36px !important;
+}
+
+.dream-map__nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}

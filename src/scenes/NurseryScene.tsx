@@ -1,6 +1,7 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { InteractiveObject } from '../components/InteractiveObject'
 import { PipCharacter } from '../components/PipCharacter'
+import { DreamDeliveryMap } from '../components/DreamDeliveryMap'
 import type { PipState } from '../data/story'
 import { portfolioProjects } from '../data/portfolio'
 
@@ -24,6 +25,7 @@ export function NurseryScene({
   onToggleLullaby,
 }: NurserySceneProps) {
   const moonClicksRef = useRef<number[]>([])
+  const [isDeliveryMapOpen, setIsDeliveryMapOpen] = useState(false)
 
   const handleMoonClick = () => {
     const now = Date.now()
@@ -128,10 +130,25 @@ export function NurseryScene({
                   <span>{isLullabyPlaying ? 'Stop lullaby' : 'Play lullaby'}</span>
                 </button>
               )}
+              {project.title === 'Dream Delivery Routes' && (
+                <button
+                  type="button"
+                  className={`lullaby-play-button ${isDeliveryMapOpen ? 'is-playing' : ''}`}
+                  onClick={() => setIsDeliveryMapOpen((prev) => !prev)}
+                  aria-expanded={isDeliveryMapOpen}
+                  aria-label={isDeliveryMapOpen ? 'Close the dream delivery flight map' : 'Open the interactive dream delivery flight map'}
+                >
+                  <span className="lullaby-play-button__icon" aria-hidden="true">{isDeliveryMapOpen ? '▲' : '🗺️'}</span>
+                  <span>{isDeliveryMapOpen ? 'Close map' : 'Open map'}</span>
+                </button>
+              )}
               <span className="portfolio-card__note">{project.note}</span>
             </article>
           ))}
         </div>
+        {isDeliveryMapOpen && (
+          <DreamDeliveryMap onClose={() => setIsDeliveryMapOpen(false)} />
+        )}
       </section>
     </section>
   )
