@@ -102,3 +102,46 @@
   top: 16px;
   right: 16px;
 }
+
+/* 4. Footer credits styling */
+.site-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.site-footer__main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.site-footer__credits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  width: 100%;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 243, 223, 0.08);
+  color: rgba(194, 195, 211, 0.5);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+.site-footer__credits p {
+  margin: 0;
+  white-space: normal;
+}
+
+@media (max-width: 760px) {
+  .site-footer__credits {
+    flex-direction: column;
+    gap: 5px;
+    font-size: 7.5px;
+  }
+}

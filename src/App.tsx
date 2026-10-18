@@ -181,7 +181,18 @@ export default function App() {
       </main>
 
       <div className="story-whisper story-whisper--global" aria-live="polite" role="status">{storyWhisper}</div>
-      <footer className="site-footer"><span>Made for the quiet hours.</span><span>Goodnight, for now.</span></footer>
+      <footer className="site-footer">
+        <div className="site-footer__main">
+          <span>Made for the quiet hours.</span>
+          <span>Goodnight, for now.</span>
+        </div>
+        <div className="site-footer__credits">
+          <p>Official art: haX.baby Pip Creator Asset Pack</p>
+          <p>Audio generated with ElevenLabs</p>
+          <p>Built with React, TypeScript and Vite</p>
+          <p>Code written with AI coding tools (Claude and Antigravity)</p>
+        </div>
+      </footer>
     </div>
   )
 }
