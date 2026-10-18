@@ -1,5 +1,6 @@
 import { PipCharacter } from '../components/PipCharacter'
 import { StarField } from '../components/StarField'
+import { DreamGuestbook } from '../components/DreamGuestbook'
 import type { PipState } from '../data/story'
 
 interface EndingSceneProps {
@@ -34,6 +35,7 @@ export function EndingScene({ pipState, onPipClick, onRevisit, onReplay }: Endin
         />
         <figcaption>All tucked in</figcaption>
       </figure>
+      <DreamGuestbook />
       <p className="scene-caption">06 <span>—</span> Goodnight</p>
     </section>
   )
