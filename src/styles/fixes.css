@@ -1,0 +1,104 @@
+/* Layout fixes for nursery stage, project cards, and Meet Pip scene */
+
+/* 1. Meet Pip Scene & Say Hello Tag clipping fix */
+.meet-scene__portrait {
+  overflow: visible !important;
+}
+
+.meet-scene__portrait img {
+  border-radius: 48% 48% 0 0 / 28% 28% 0 0;
+}
+
+.meet-scene .pip-character__hint {
+  right: -6px;
+  z-index: 10;
+}
+
+.meet-scene__figure {
+  max-width: 100%;
+}
+
+/* 2. Nursery Stage overlapping text and objects */
+.nursery-stage {
+  min-height: 480px;
+}
+
+.room-object {
+  max-width: 180px;
+}
+
+.room-object__name {
+  word-break: break-word;
+  text-wrap: balance;
+}
+
+.room-object__hint {
+  word-break: break-word;
+  max-width: 140px;
+}
+
+@media (min-width: 761px) {
+  .room-object--lamp {
+    top: 90px;
+    left: 6%;
+  }
+
+  .room-object--bookshelf {
+    bottom: 24px;
+    left: 7%;
+  }
+
+  .room-object--toy {
+    top: 90px;
+    right: 8%;
+  }
+
+  .room-object--musicbox {
+    bottom: 24px;
+    right: 6%;
+  }
+}
+
+@media (max-width: 760px) {
+  .nursery-stage {
+    gap: 12px 10px;
+    padding: 20px 8px;
+    min-height: auto;
+  }
+
+  .room-object {
+    min-height: 120px;
+  }
+}
+
+/* 3. Project Cards layout fix: prevent symbol & note from overlapping text */
+.portfolio-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  height: 100%;
+}
+
+.portfolio-card h4 {
+  max-width: calc(100% - 44px);
+  margin-top: 16px;
+}
+
+.portfolio-card p {
+  max-width: 100%;
+  margin: 10px 0 20px;
+  flex-grow: 1;
+}
+
+.portfolio-card__note {
+  position: relative !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin-top: auto;
+  align-self: flex-end;
+}
+
+.portfolio-card__symbol {
+  top: 16px;
+  right: 16px;
+}
