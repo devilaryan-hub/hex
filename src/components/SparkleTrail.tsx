@@ -22,10 +22,13 @@ export function SparkleTrail() {
   useEffect(() => {
     if (reducedMotion) return
 
-    // Disable on touch devices
-    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
-      return
-    }
+    // Disable on touch-only devices (e.g. mobile phones without a fine pointer)
+    const isTouchOnly =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(pointer: coarse)').matches &&
+      !window.matchMedia('(any-pointer: fine)').matches
+
+    if (isTouchOnly) return
 
     const canvas = canvasRef.current
     if (!canvas) return
@@ -48,34 +51,43 @@ export function SparkleTrail() {
     resize()
     window.addEventListener('resize', resize)
 
-    const handlePointerMove = (e: PointerEvent) => {
-      if (e.pointerType === 'touch') return
+    const addSparkle = (clientX: number, clientY: number, pointerType?: string) => {
+      if (pointerType === 'touch') return
 
-      const dist = Math.hypot(e.clientX - lastX, e.clientY - lastY)
-      if (dist < 4) return
+      const dist = Math.hypot(clientX - lastX, clientY - lastY)
+      if (dist < 3) return
 
-      lastX = e.clientX
-      lastY = e.clientY
+      lastX = clientX
+      lastY = clientY
 
-      const count = Math.min(2, Math.max(1, Math.floor(dist / 14)))
+      const count = Math.min(2, Math.max(1, Math.floor(dist / 12)))
       for (let i = 0; i < count; i++) {
         if (particles.length >= MAX_PARTICLES) {
           particles.shift()
         }
 
         particles.push({
-          x: e.clientX + (Math.random() - 0.5) * 8,
-          y: e.clientY + (Math.random() - 0.5) * 8,
-          vx: (Math.random() - 0.5) * 0.8,
-          vy: 0.6 + Math.random() * 0.8, // drift down
-          size: 4 + Math.random() * 4,
+          x: clientX + (Math.random() - 0.5) * 12,
+          y: clientY + (Math.random() - 0.5) * 12,
+          vx: (Math.random() - 0.5) * 0.9,
+          vy: 0.8 + Math.random() * 1.0, // drift down
+          size: 8 + Math.random() * 6,
           color: COLORS[Math.floor(Math.random() * COLORS.length)],
           createdAt: performance.now(),
         })
       }
     }
 
+    const handlePointerMove = (e: PointerEvent) => {
+      addSparkle(e.clientX, e.clientY, e.pointerType)
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      addSparkle(e.clientX, e.clientY, 'mouse')
+    }
+
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
 
     const render = (now: number) => {
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
@@ -91,22 +103,33 @@ export function SparkleTrail() {
 
         const progress = elapsed / DURATION
         const alpha = Math.max(0, 1 - progress)
-        const currentSize = Math.max(0.5, p.size * (1 - progress * 0.75))
+        const currentSize = Math.max(1, p.size * (1 - progress * 0.75))
 
         p.x += p.vx
         p.y += p.vy
 
-        // 4-pointed star sparkle
         ctx.save()
         ctx.globalAlpha = alpha
         ctx.fillStyle = p.color
+        ctx.shadowColor = p.color
+        ctx.shadowBlur = 6
+
+        // 4-pointed star sparkle with fuller curve
         ctx.beginPath()
         ctx.moveTo(p.x, p.y - currentSize)
-        ctx.quadraticCurveTo(p.x, p.y, p.x + currentSize, p.y)
-        ctx.quadraticCurveTo(p.x, p.y, p.x, p.y + currentSize)
-        ctx.quadraticCurveTo(p.x, p.y, p.x - currentSize, p.y)
-        ctx.quadraticCurveTo(p.x, p.y, p.x, p.y - currentSize)
+        ctx.quadraticCurveTo(p.x + currentSize * 0.15, p.y - currentSize * 0.15, p.x + currentSize, p.y)
+        ctx.quadraticCurveTo(p.x + currentSize * 0.15, p.y + currentSize * 0.15, p.x, p.y + currentSize)
+        ctx.quadraticCurveTo(p.x - currentSize * 0.15, p.y + currentSize * 0.15, p.x - currentSize, p.y)
+        ctx.quadraticCurveTo(p.x - currentSize * 0.15, p.y - currentSize * 0.15, p.x, p.y - currentSize)
+        ctx.closePath()
         ctx.fill()
+
+        // Center glowing core
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, Math.max(0.5, currentSize * 0.22), 0, Math.PI * 2)
+        ctx.fillStyle = '#FFFFFF'
+        ctx.fill()
+
         ctx.restore()
       }
 
@@ -118,6 +141,7 @@ export function SparkleTrail() {
     return () => {
       window.removeEventListener('resize', resize)
       window.removeEventListener('pointermove', handlePointerMove)
+      window.removeEventListener('mousemove', handleMouseMove)
       cancelAnimationFrame(animationFrameId)
     }
   }, [reducedMotion])
