@@ -1,0 +1,86 @@
+@keyframes star-breathe {
+  0% { opacity: 0.34; transform: scale(0.82); }
+  100% { opacity: 0.82; transform: scale(1); }
+}
+
+@keyframes window-peek {
+  0%, 60%, 100% { transform: translateY(14%); opacity: 0.38; }
+  74%, 86% { transform: translateY(0); opacity: 0.78; }
+}
+
+@keyframes pip-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes pip-tilt {
+  0%, 100% { transform: rotate(0); }
+  42% { transform: rotate(-4deg) translateY(-3px); }
+  72% { transform: rotate(2deg); }
+}
+
+@keyframes pip-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  38% { transform: translateY(-9px) scale(1.015); }
+  72% { transform: translateY(2px) scale(0.995); }
+}
+
+@keyframes pip-peek {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-5px) rotate(2deg); }
+  65% { transform: translateY(1px) rotate(-1deg); }
+}
+
+@keyframes pip-blink {
+  0%, 44%, 51%, 100% { opacity: 0; transform: scaleY(0); }
+  46%, 49% { opacity: 0.98; transform: scaleY(1); }
+}
+
+@keyframes star-drift {
+  from { transform: translate3d(-3px, 0, 0) rotate(-8deg); }
+  to { transform: translate3d(4px, -8px, 0) rotate(9deg); }
+}
+
+@keyframes lantern-warm {
+  0%, 100% { filter: brightness(1); }
+  45% { filter: brightness(1.14); }
+}
+
+@keyframes music-box-turn {
+  0%, 100% { transform: rotate(0); }
+  36% { transform: rotate(1.4deg); }
+  72% { transform: rotate(-0.8deg); }
+}
+
+@keyframes lamb-dream {
+  0%, 100% { transform: translateY(0); }
+  45% { transform: translateY(-5px); }
+}
+
+@keyframes secret-glimmer {
+  0%, 100% { opacity: 0.68; }
+  50% { opacity: 1; }
+}
+
+@keyframes portfolio-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes portfolio-symbol {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+.secret-star:not(:hover) svg { animation: secret-glimmer 3.7s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .star-field__star, .arrival-scene__window-figure, .pip-character img, .pip-character,
+  .pip-character__blink, .room-object--star.is-activated .object-art--star, .secret-star svg,
+  .nursery-stage.window-awake .room-object--window .object-art__star,
+  .nursery-stage.is-lit .room-object--lamp .object-art__lantern,
+  .room-object--musicbox.is-activated .object-art__musicbox,
+  .room-object--toy.is-activated .object-art--toy {
+    animation: none !important;
+  }
+}

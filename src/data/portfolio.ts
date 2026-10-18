@@ -1,0 +1,47 @@
+export const pipProfile = {
+  name: 'Pip',
+  role: 'Junior Dream Engineer',
+  studio: 'Midnight Nursery',
+  tagline: 'I build the dreams you fall asleep inside.',
+  description: 'A curious little maker with a smooth round skull, cozy pinpricks of light in huge soft eye sockets, a tiny crooked smile, and a starry nightcap finished with a pink bow.',
+  personality: ['curious', 'sleepy', 'clumsy', 'easily delighted'],
+}
+
+export const portfolioProjects = [
+  {
+    number: '01',
+    title: 'The Lullaby Lab',
+    category: 'Sound design / music box',
+    description: 'A pocket-sized collection of soothing loops composed for restless rooms and very small listeners.',
+    note: '12 sleepy loops',
+    symbol: '♪',
+    accent: 'amber',
+  },
+  {
+    number: '02',
+    title: 'Nightlight Collection',
+    category: 'Object design / illumination',
+    description: 'Warm lamps and bedside lanterns that turn the last shadows of the day into friendly shapes.',
+    note: 'soft amber studies',
+    symbol: '✦',
+    accent: 'rose',
+  },
+  {
+    number: '03',
+    title: 'Dream Delivery Routes',
+    category: 'Wayfinding / rooftop maps',
+    description: 'An illustrated route system for flying good dreams over chimneys, clouds, and one very tall moon.',
+    note: '18 rooftops mapped',
+    symbol: '↗',
+    accent: 'lavender',
+  },
+  {
+    number: '04',
+    title: 'Bedtime Storybook',
+    category: 'Writing / illustration',
+    description: 'A tiny illustrated adventure about a brave little light that learns the dark can feel like home.',
+    note: '1 tiny hero',
+    symbol: '✧',
+    accent: 'mint',
+  },
+] as const
