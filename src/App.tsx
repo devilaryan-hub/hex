@@ -13,6 +13,7 @@ import { EndingScene } from './scenes/EndingScene'
 import { MeetPipScene } from './scenes/MeetPipScene'
 import { NurseryScene } from './scenes/NurseryScene'
 import { SecretScene } from './scenes/SecretScene'
+import { SparkleTrail } from './components/SparkleTrail'
 
 const sceneNarration: Partial<Record<SceneId, AudioNarrationId>> = {
   arrival: 'arrival',
@@ -147,6 +148,7 @@ export default function App() {
 
   return (
     <div className="storybook-shell">
+      <SparkleTrail />
       <a className="skip-link" href="#arrival">Skip to the story</a>
       <header className="site-header">
         <button className="site-mark" type="button" onClick={() => navigateToScene('arrival')} aria-label="Return to the beginning of Pip's story">
