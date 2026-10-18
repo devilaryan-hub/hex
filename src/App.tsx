@@ -175,6 +175,10 @@ export default function App() {
     playInteraction('musicBox')
   }, [incrementInteractionCount, playInteraction, reactPip, unlockAudio])
 
+  const handleCatchDream = useCallback(() => {
+    playInteraction('floatingStar')
+  }, [playInteraction])
+
   const revealSecret = useCallback(() => {
     unlockAudio()
     setDiscoveredSecret(true)
@@ -253,6 +257,7 @@ export default function App() {
           onMoonEasterEgg={handleMoonEasterEgg}
           isLullabyPlaying={isLullabyPlaying}
           onToggleLullaby={toggleLullaby}
+          onCatchDream={handleCatchDream}
         />
         <DreamScene pipState={pipState} onPipClick={handlePipClick} />
         <SecretScene discovered={discoveredSecret} pipState={pipState} onPipClick={handlePipClick} onReveal={revealSecret} />

@@ -594,3 +594,174 @@ button.object-art__moon:focus-visible {
   text-align: center;
 }
 
+/* 7. Dream Catcher Mini-Game */
+.dream-catcher-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(16, 20, 38, 0.88);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.dream-catcher-modal {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: #171c35;
+  border: 2px solid var(--amber);
+  border-radius: 12px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 4px 4px 0px var(--amber);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.dream-catcher__topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px dashed rgba(242, 189, 120, 0.3);
+  padding-bottom: 8px;
+}
+
+.dream-catcher__title {
+  font-family: var(--display-retro);
+  color: var(--amber);
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.dream-catcher__subtitle {
+  color: var(--muted-lavender);
+  font-size: 0.8rem;
+  margin: 2px 0 0;
+}
+
+.dream-catcher__close-btn {
+  background: transparent;
+  border: 1px solid var(--amber);
+  color: var(--cream);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--amber);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.dream-catcher__close-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--amber);
+}
+
+.dream-catcher__scoreboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.dream-catcher__score-box {
+  background: #101426;
+  border: 1px solid rgba(242, 189, 120, 0.25);
+  border-radius: 6px;
+  padding: 6px 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dream-catcher__score-label {
+  font-size: 9px;
+  color: var(--muted-lavender);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.dream-catcher__score-val {
+  font-family: var(--display-retro);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.dream-catcher__canvas-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1.5px solid rgba(165, 160, 200, 0.3);
+  background: #101426;
+  touch-action: none;
+}
+
+.dream-catcher__canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  cursor: grab;
+}
+
+.dream-catcher__canvas:active {
+  cursor: grabbing;
+}
+
+.dream-catcher__gameover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 20, 38, 0.88);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.dream-catcher__gameover-overlay h4 {
+  font-family: var(--display-retro);
+  font-size: 1.4rem;
+  color: var(--amber);
+  margin: 0;
+}
+
+.dream-catcher__gameover-overlay p {
+  color: var(--cream);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.dream-catcher__play-again-btn {
+  padding: 8px 18px !important;
+  font-size: 11px !important;
+  min-height: 40px !important;
+}
+
+.dream-catcher__controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.dream-catcher__nav-btn {
+  padding: 6px 14px !important;
+  font-size: 10px !important;
+  min-height: 36px !important;
+}
+
+.dream-catcher__hint {
+  font-size: 10px;
+  color: var(--muted-lavender);
+  text-align: center;
+}
+
+

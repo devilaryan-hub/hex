@@ -3,6 +3,7 @@ import { InteractiveObject } from '../components/InteractiveObject'
 import { PipCharacter } from '../components/PipCharacter'
 import { DreamDeliveryMap } from '../components/DreamDeliveryMap'
 import { StorybookModal } from '../components/StorybookModal'
+import { DreamCatcherModal } from '../components/DreamCatcherModal'
 import type { PipState } from '../data/story'
 import { portfolioProjects } from '../data/portfolio'
 
@@ -14,6 +15,7 @@ interface NurserySceneProps {
   onMoonEasterEgg: () => void
   isLullabyPlaying: boolean
   onToggleLullaby: () => void
+  onCatchDream?: () => void
 }
 
 export function NurseryScene({
@@ -24,11 +26,14 @@ export function NurseryScene({
   onMoonEasterEgg,
   isLullabyPlaying,
   onToggleLullaby,
+  onCatchDream,
 }: NurserySceneProps) {
   const moonClicksRef = useRef<number[]>([])
   const [isDeliveryMapOpen, setIsDeliveryMapOpen] = useState(false)
   const [isStorybookOpen, setIsStorybookOpen] = useState(false)
   const storybookTriggerRef = useRef<HTMLButtonElement | null>(null)
+  const [isDreamCatcherOpen, setIsDreamCatcherOpen] = useState(false)
+  const dreamCatcherTriggerRef = useRef<HTMLButtonElement | null>(null)
 
   const handleMoonClick = () => {
     const now = Date.now()
@@ -158,6 +163,19 @@ export function NurseryScene({
                   <span>Read story</span>
                 </button>
               )}
+              {project.title === 'Dream Catcher' && (
+                <button
+                  ref={dreamCatcherTriggerRef}
+                  type="button"
+                  className="lullaby-play-button"
+                  onClick={() => setIsDreamCatcherOpen(true)}
+                  aria-haspopup="dialog"
+                  aria-label="Play the Dream Catcher mini-game"
+                >
+                  <span className="lullaby-play-button__icon" aria-hidden="true">★</span>
+                  <span>Play game</span>
+                </button>
+              )}
               <span className="portfolio-card__note">{project.note}</span>
             </article>
           ))}
@@ -169,6 +187,12 @@ export function NurseryScene({
           isOpen={isStorybookOpen}
           onClose={() => setIsStorybookOpen(false)}
           returnFocusRef={storybookTriggerRef}
+        />
+        <DreamCatcherModal
+          isOpen={isDreamCatcherOpen}
+          onClose={() => setIsDreamCatcherOpen(false)}
+          returnFocusRef={dreamCatcherTriggerRef}
+          onCatch={onCatchDream}
         />
       </section>
     </section>

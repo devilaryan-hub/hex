@@ -44,4 +44,13 @@ export const portfolioProjects = [
     symbol: '✧',
     accent: 'mint',
   },
+  {
+    number: '05',
+    title: 'Dream Catcher',
+    category: 'Play / midnight mini-game',
+    description: "Catch the tumbling stars, moons, and sleepy clouds into Pip's basket before the timer runs out.",
+    note: '30-second game',
+    symbol: '★',
+    accent: 'amber',
+  },
 ] as const
