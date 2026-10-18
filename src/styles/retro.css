@@ -412,3 +412,185 @@ button.object-art__moon:focus-visible {
   transform: none !important;
   box-shadow: none !important;
 }
+
+/* 6. Storybook Modal */
+.storybook-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(16, 20, 38, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.storybook-modal {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  background: #171c35;
+  border: 2px solid var(--amber);
+  border-radius: 12px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 4px 4px 0px var(--amber);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  perspective: 1000px;
+  box-sizing: border-box;
+}
+
+.storybook-modal__topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed rgba(242, 189, 120, 0.3);
+  padding-bottom: 10px;
+}
+
+.storybook-modal__page-count {
+  font-family: var(--display-retro);
+  font-size: 13px;
+  color: var(--amber);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.storybook-modal__close-btn {
+  background: transparent;
+  border: 1px solid var(--amber);
+  color: var(--cream);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--amber);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.storybook-modal__close-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--amber);
+}
+
+.storybook-modal__book {
+  position: relative;
+  min-height: 270px;
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+}
+
+.storybook-modal__page {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation-duration: 380ms;
+  animation-fill-mode: both;
+  transform-origin: center left;
+}
+
+.storybook-modal__page.flip-next {
+  animation-name: storybookTurnNext;
+}
+
+.storybook-modal__page.flip-prev {
+  animation-name: storybookTurnPrev;
+}
+
+@keyframes storybookTurnNext {
+  0% {
+    opacity: 0;
+    transform: rotateY(-35deg) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+@keyframes storybookTurnPrev {
+  0% {
+    opacity: 0;
+    transform: rotateY(35deg) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+.storybook-modal__book.reduced-motion .storybook-modal__page {
+  animation: storybookFade 250ms ease both;
+  transform: none !important;
+}
+
+@keyframes storybookFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.storybook-modal__illustration {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(165, 160, 200, 0.25);
+  background: #101426;
+}
+
+.storybook-modal__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 140px;
+}
+
+.storybook-modal__page-title {
+  font-family: var(--display-retro);
+  color: var(--amber);
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.storybook-modal__page-text {
+  color: var(--cream);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.storybook-modal__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px dashed rgba(242, 189, 120, 0.3);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.storybook-modal__nav-btn {
+  padding: 6px 14px !important;
+  font-size: 10px !important;
+  min-height: 38px !important;
+}
+
+.storybook-modal__nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.storybook-modal__hint {
+  font-size: 10px;
+  color: var(--muted-lavender);
+  text-align: center;
+}
+

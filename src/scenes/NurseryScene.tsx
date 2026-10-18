@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { InteractiveObject } from '../components/InteractiveObject'
 import { PipCharacter } from '../components/PipCharacter'
 import { DreamDeliveryMap } from '../components/DreamDeliveryMap'
+import { StorybookModal } from '../components/StorybookModal'
 import type { PipState } from '../data/story'
 import { portfolioProjects } from '../data/portfolio'
 
@@ -26,6 +27,8 @@ export function NurseryScene({
 }: NurserySceneProps) {
   const moonClicksRef = useRef<number[]>([])
   const [isDeliveryMapOpen, setIsDeliveryMapOpen] = useState(false)
+  const [isStorybookOpen, setIsStorybookOpen] = useState(false)
+  const storybookTriggerRef = useRef<HTMLButtonElement | null>(null)
 
   const handleMoonClick = () => {
     const now = Date.now()
@@ -142,6 +145,19 @@ export function NurseryScene({
                   <span>{isDeliveryMapOpen ? 'Close map' : 'Open map'}</span>
                 </button>
               )}
+              {project.title === 'Bedtime Storybook' && (
+                <button
+                  ref={storybookTriggerRef}
+                  type="button"
+                  className="lullaby-play-button"
+                  onClick={() => setIsStorybookOpen(true)}
+                  aria-haspopup="dialog"
+                  aria-label="Read the interactive Bedtime Storybook"
+                >
+                  <span className="lullaby-play-button__icon" aria-hidden="true">📖</span>
+                  <span>Read story</span>
+                </button>
+              )}
               <span className="portfolio-card__note">{project.note}</span>
             </article>
           ))}
@@ -149,6 +165,11 @@ export function NurseryScene({
         {isDeliveryMapOpen && (
           <DreamDeliveryMap onClose={() => setIsDeliveryMapOpen(false)} />
         )}
+        <StorybookModal
+          isOpen={isStorybookOpen}
+          onClose={() => setIsStorybookOpen(false)}
+          returnFocusRef={storybookTriggerRef}
+        />
       </section>
     </section>
   )
