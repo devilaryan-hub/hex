@@ -14,6 +14,7 @@ import { MeetPipScene } from './scenes/MeetPipScene'
 import { NurseryScene } from './scenes/NurseryScene'
 import { SecretScene } from './scenes/SecretScene'
 import { SparkleTrail } from './components/SparkleTrail'
+import { PipChatModal } from './components/PipChatModal'
 import { lullabyPlayer } from './utils/lullabyAudio'
 import { recordVisit, recordDiscoveredItem } from './utils/visitorMemory'
 
@@ -81,6 +82,8 @@ export default function App() {
   const [storyWhisper, setStoryWhisper] = useState('')
   const [playedNarrations, setPlayedNarrations] = useState<Set<AudioNarrationId>>(() => new Set())
   const [isLullabyPlaying, setIsLullabyPlaying] = useState(false)
+  const [isChatOpen, setIsChatOpen] = useState(false)
+  const chatTriggerRef = useRef<HTMLButtonElement | null>(null)
 
   const playLullaby = useCallback(() => {
     unlockAudio()
@@ -301,6 +304,25 @@ export default function App() {
           <p>Code written with AI coding tools (Claude and Antigravity)</p>
         </div>
       </footer>
+
+      <button
+        ref={chatTriggerRef}
+        type="button"
+        className="pip-chat-launcher"
+        onClick={() => setIsChatOpen(true)}
+        aria-haspopup="dialog"
+        aria-label="Talk to Pip"
+      >
+        <span className="pip-chat-launcher__icon" aria-hidden="true">💬</span>
+        <span className="pip-chat-launcher__text">Talk to Pip</span>
+      </button>
+
+      <PipChatModal
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        onPipStateChange={reactPip}
+        returnFocusRef={chatTriggerRef}
+      />
     </div>
   )
 }
