@@ -83,13 +83,19 @@ export function NurseryScene({
           </span>
         </InteractiveObject>
         <InteractiveObject name="Bedside lantern" hint="Turn on a little warmth." activated={activated.has('lamp')} onActivate={() => onActivate('lamp')} className="room-object--lamp">
-          <img className="object-art__lantern" src="/assets/pip_dream_lantern.png" alt="" loading="lazy" />
+          <picture>
+            <source srcSet="/assets/pip_dream_lantern.webp" type="image/webp" />
+            <img className="object-art__lantern" src="/assets/pip_dream_lantern.png" alt="" width={1024} height={914} loading="lazy" />
+          </picture>
         </InteractiveObject>
         <InteractiveObject name="Story shelf" hint="Find the page that slipped loose." activated={activated.has('bookshelf')} onActivate={() => onActivate('bookshelf')} className="room-object--bookshelf">
           <span className="object-art object-art--bookshelf"><i /><i /><i /><span /><i /><i /><b className="object-art__page" /></span>
         </InteractiveObject>
         <InteractiveObject name="Lullaby box" hint="Turn the key on Pip's music box." activated={activated.has('musicBox')} onActivate={() => onActivate('musicBox')} className="room-object--musicbox">
-          <img className="object-art__musicbox" src="/assets/pip_lullaby_box.png" alt="" loading="lazy" />
+          <picture>
+            <source srcSet="/assets/pip_lullaby_box.webp" type="image/webp" />
+            <img className="object-art__musicbox" src="/assets/pip_lullaby_box.png" alt="" width={1024} height={924} loading="lazy" />
+          </picture>
         </InteractiveObject>
         <InteractiveObject name="A very small door" hint="Open the door to a tiny hidden room." activated={activated.has('tinyDoor')} onActivate={() => onActivate('tinyDoor')} className="room-object--door">
           <span className="object-art object-art--door">

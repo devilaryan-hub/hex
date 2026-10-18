@@ -61,6 +61,10 @@ export function DreamScene({ pipState, onPipClick }: DreamSceneProps) {
 
     // Touch idle drift
     const startDrift = () => {
+      if (document.visibilityState === 'hidden') {
+        driftRaf = requestAnimationFrame(startDrift)
+        return
+      }
       const now = performance.now()
       if (isTouch && now - lastTouchTime > 1200) {
         const cx = scene.clientWidth / 2

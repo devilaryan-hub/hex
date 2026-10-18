@@ -86,10 +86,22 @@ export function SparkleTrail() {
       addSparkle(e.clientX, e.clientY, 'mouse')
     }
 
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        particles.length = 0
+      }
+    }
+
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    document.addEventListener('visibilitychange', handleVisibilityChange)
 
     const render = (now: number) => {
+      if (document.visibilityState === 'hidden') {
+        animationFrameId = requestAnimationFrame(render)
+        return
+      }
+
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
 
       for (let i = particles.length - 1; i >= 0; i--) {
@@ -142,6 +154,7 @@ export function SparkleTrail() {
       window.removeEventListener('resize', resize)
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
       cancelAnimationFrame(animationFrameId)
     }
   }, [reducedMotion])

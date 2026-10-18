@@ -25,6 +25,11 @@ export function PipCharacter({ state, onClick, image, imageAlt, className = '', 
     event.currentTarget.style.setProperty('--gaze-y', '0px')
   }
 
+  const isCloud = image.includes('cloud')
+  const imgWidth = isCloud ? 896 : 682
+  const imgHeight = isCloud ? 1090 : 1024
+  const webpSrc = image.endsWith('.png') ? image.replace(/\.png$/, '.webp') : undefined
+
   return (
     <button
       className={`pip-character pip-character--${state} ${className}`}
@@ -35,7 +40,17 @@ export function PipCharacter({ state, onClick, image, imageAlt, className = '', 
       aria-label={label}
       title={label}
     >
-      <img src={image} alt={imageAlt} loading="lazy" draggable="false" />
+      <picture>
+        {webpSrc && <source srcSet={webpSrc} type="image/webp" />}
+        <img
+          src={image}
+          alt={imageAlt}
+          width={imgWidth}
+          height={imgHeight}
+          loading="lazy"
+          draggable="false"
+        />
+      </picture>
       <span className="pip-character__blink pip-character__blink--left" aria-hidden="true" />
       <span className="pip-character__blink pip-character__blink--right" aria-hidden="true" />
       <span className="pip-character__hint" aria-hidden="true">say hello</span>

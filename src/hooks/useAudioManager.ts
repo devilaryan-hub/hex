@@ -126,7 +126,7 @@ export function useAudioManager() {
 
     const next = new Audio(source)
     next.loop = true
-    next.preload = 'auto'
+    next.preload = 'none'
     next.volume = 0
     ambientRef.current = { sceneId, element: next }
     void next.play().catch(() => undefined)
@@ -159,7 +159,7 @@ export function useAudioManager() {
     if (kind === 'narration') {
       narrationRef.current?.pause()
       const player = new Audio(source)
-      player.preload = 'auto'
+      player.preload = 'none'
       player.volume = effectiveVolume('narration')
       narrationRef.current = player
       player.addEventListener('ended', () => {
@@ -171,7 +171,7 @@ export function useAudioManager() {
 
     const existing = sfxPlayers.current.get(key)
     const player = existing ?? new Audio(source)
-    player.preload = 'auto'
+    player.preload = 'none'
     player.currentTime = 0
     player.volume = effectiveVolume('sfx')
     sfxPlayers.current.set(key, player)
