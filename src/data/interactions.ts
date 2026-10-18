@@ -16,7 +16,7 @@ export const objectStories: Record<string, { state: 'curious' | 'happy' | 'surpr
   },
   musicBox: {
     state: 'curious',
-    message: 'The key turns once. Its lullaby is saved for a night with sound.',
+    message: 'The music box winds softly, playing a gentle bedtime lullaby.',
     soundId: 'musicBox',
   },
   tinyDoor: {

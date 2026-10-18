@@ -10,9 +10,19 @@ interface NurserySceneProps {
   onActivate: (objectId: string) => void
   onPipClick: () => void
   onMoonEasterEgg: () => void
+  isLullabyPlaying: boolean
+  onToggleLullaby: () => void
 }
 
-export function NurseryScene({ activated, pipState, onActivate, onPipClick, onMoonEasterEgg }: NurserySceneProps) {
+export function NurseryScene({
+  activated,
+  pipState,
+  onActivate,
+  onPipClick,
+  onMoonEasterEgg,
+  isLullabyPlaying,
+  onToggleLullaby,
+}: NurserySceneProps) {
   const moonClicksRef = useRef<number[]>([])
 
   const handleMoonClick = () => {
@@ -106,6 +116,18 @@ export function NurseryScene({ activated, pipState, onActivate, onPipClick, onMo
               <div className="portfolio-card__symbol" aria-hidden="true">{project.symbol}</div>
               <h4>{project.title}</h4>
               <p>{project.description}</p>
+              {project.title === 'The Lullaby Lab' && (
+                <button
+                  type="button"
+                  className={`lullaby-play-button ${isLullabyPlaying ? 'is-playing' : ''}`}
+                  onClick={onToggleLullaby}
+                  aria-pressed={isLullabyPlaying}
+                  aria-label={isLullabyPlaying ? 'Stop the lullaby melody' : 'Play a music box lullaby from The Lullaby Lab'}
+                >
+                  <span className="lullaby-play-button__icon" aria-hidden="true">{isLullabyPlaying ? '■' : '▶'}</span>
+                  <span>{isLullabyPlaying ? 'Stop lullaby' : 'Play lullaby'}</span>
+                </button>
+              )}
               <span className="portfolio-card__note">{project.note}</span>
             </article>
           ))}

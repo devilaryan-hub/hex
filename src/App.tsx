@@ -14,6 +14,7 @@ import { MeetPipScene } from './scenes/MeetPipScene'
 import { NurseryScene } from './scenes/NurseryScene'
 import { SecretScene } from './scenes/SecretScene'
 import { SparkleTrail } from './components/SparkleTrail'
+import { lullabyPlayer } from './utils/lullabyAudio'
 
 const sceneNarration: Partial<Record<SceneId, AudioNarrationId>> = {
   arrival: 'arrival',
@@ -78,6 +79,31 @@ export default function App() {
   const [discoveredSecret, setDiscoveredSecret] = useState(false)
   const [storyWhisper, setStoryWhisper] = useState('')
   const [playedNarrations, setPlayedNarrations] = useState<Set<AudioNarrationId>>(() => new Set())
+  const [isLullabyPlaying, setIsLullabyPlaying] = useState(false)
+
+  const playLullaby = useCallback(() => {
+    unlockAudio()
+    setIsLullabyPlaying(true)
+    lullabyPlayer.play({
+      muted,
+      masterVolume,
+      volume: sfxVolume,
+      onEnd: () => setIsLullabyPlaying(false),
+    })
+  }, [masterVolume, muted, sfxVolume, unlockAudio])
+
+  const stopLullaby = useCallback(() => {
+    lullabyPlayer.stop()
+    setIsLullabyPlaying(false)
+  }, [])
+
+  const toggleLullaby = useCallback(() => {
+    if (isLullabyPlaying) {
+      stopLullaby()
+    } else {
+      playLullaby()
+    }
+  }, [isLullabyPlaying, playLullaby, stopLullaby])
   const pipReactionIndex = useRef(0)
   const lastInteractionAt = useRef(0)
   const skipNextNarration = useRef<AudioNarrationId | null>(null)
@@ -134,8 +160,12 @@ export default function App() {
     if (!story) return
     reactPip(story.state)
     setStoryWhisper(story.message)
-    playInteraction(story.soundId)
-  }, [incrementInteractionCount, playInteraction, reactPip, unlockAudio])
+    if (objectId === 'musicBox') {
+      playLullaby()
+    } else {
+      playInteraction(story.soundId)
+    }
+  }, [incrementInteractionCount, playInteraction, playLullaby, reactPip, unlockAudio])
 
   const handleMoonEasterEgg = useCallback(() => {
     unlockAudio()
@@ -172,6 +202,7 @@ export default function App() {
 
   const replay = useCallback(() => {
     stopAll()
+    stopLullaby()
     setActivatedObjects(new Set())
     setDiscoveredSecret(false)
     setStoryWhisper('')
@@ -182,7 +213,7 @@ export default function App() {
     resetPip()
     setMuted(true)
     goToScene('arrival')
-  }, [goToScene, resetPip, setMuted, stopAll])
+  }, [goToScene, resetPip, setMuted, stopAll, stopLullaby])
 
   return (
     <div className="storybook-shell">
@@ -220,6 +251,8 @@ export default function App() {
           onActivate={handleObjectActivate}
           onPipClick={handlePipClick}
           onMoonEasterEgg={handleMoonEasterEgg}
+          isLullabyPlaying={isLullabyPlaying}
+          onToggleLullaby={toggleLullaby}
         />
         <DreamScene pipState={pipState} onPipClick={handlePipClick} />
         <SecretScene discovered={discoveredSecret} pipState={pipState} onPipClick={handlePipClick} onReveal={revealSecret} />

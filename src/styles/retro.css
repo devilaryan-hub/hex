@@ -180,11 +180,54 @@ button.object-art__moon:focus-visible {
   outline-offset: 2px;
 }
 
+/* 6. Playable Lullaby Lab button */
+.lullaby-play-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  margin: 12px 0 16px;
+  padding: 8px 14px;
+  background: var(--night-blue);
+  border: 1.5px solid var(--amber);
+  border-radius: 6px;
+  color: var(--cream);
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px var(--amber);
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+
+.lullaby-play-button:hover {
+  background: #2e3760;
+  box-shadow: 3px 3px 0px var(--amber);
+  transform: translate(-1px, -1px);
+}
+
+.lullaby-play-button:active,
+.lullaby-play-button.is-playing {
+  background: var(--amber);
+  color: var(--midnight);
+  border-color: var(--cream);
+  box-shadow: 1px 1px 0px var(--cream);
+  transform: translate(1px, 1px);
+}
+
+.lullaby-play-button__icon {
+  font-size: 10px;
+  line-height: 1;
+}
+
 /* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
   .arrival-scene .story-link--primary,
   .ending-scene__actions .story-link,
-  .scene-nav--desktop button {
+  .scene-nav--desktop button,
+  .lullaby-play-button {
     transform: none !important;
     transition: none !important;
   }
