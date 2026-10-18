@@ -242,4 +242,58 @@ button.object-art__moon:focus-visible {
   .retro-marquee span:nth-child(n + 2) {
     display: none;
   }
+
+  .dream-nightlight-layer {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    background: none !important;
+    opacity: 0.45;
+  }
 }
+
+/* 7. Dream scene nightlight layer */
+.dream-nightlight-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask-image: radial-gradient(circle 150px at var(--nightlight-x, 50%) var(--nightlight-y, 50%), rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 70px, transparent 150px);
+  mask-image: radial-gradient(circle 150px at var(--nightlight-x, 50%) var(--nightlight-y, 50%), rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 70px, transparent 150px);
+  background: radial-gradient(circle 170px at var(--nightlight-x, 50%) var(--nightlight-y, 50%), rgba(242, 189, 120, 0.09) 0%, transparent 170px);
+  transition: opacity 300ms ease;
+}
+
+.dream-secret-whisper {
+  position: absolute;
+  color: var(--amber);
+  font: italic 13px/1.4 var(--serif);
+  letter-spacing: 0.06em;
+  opacity: 0.9;
+  text-shadow: 0 0 8px rgba(242, 189, 120, 0.5);
+}
+
+.dream-secret-creature {
+  position: absolute;
+  color: var(--cream);
+  font-size: 16px;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 6px var(--amber));
+}
+
+.dream-secret-star {
+  position: absolute;
+  color: var(--lavender);
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.whisper-1 { top: 28%; left: 22%; }
+.whisper-2 { bottom: 25%; right: 28%; }
+.whisper-3 { top: 62%; left: 45%; }
+.creature-moth { top: 35%; right: 22%; font-size: 20px; color: var(--lavender); }
+.creature-bunny { bottom: 20%; left: 16%; font-size: 14px; color: var(--paper); }
+.creature-firefly { top: 48%; left: 32%; font-size: 16px; color: var(--amber); }
+.star-1 { top: 18%; left: 52%; }
+.star-2 { bottom: 38%; right: 18%; }
+.star-3 { top: 72%; left: 68%; }
