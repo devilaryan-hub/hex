@@ -4,6 +4,7 @@ import App from './App'
 import './styles/global.css'
 import './styles/animations.css'
 import './styles/fixes.css'
+import './styles/retro.css'
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

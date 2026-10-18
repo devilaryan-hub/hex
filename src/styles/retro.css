@@ -1,0 +1,189 @@
+/* Retro early-web layer */
+
+:root {
+  --display-retro: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', 'Trebuchet MS', cursive, sans-serif;
+}
+
+/* 1. Playful display font for section headings (system font stack only) */
+.scene-copy h1,
+.scene-copy h2,
+.nursery-scene__heading h2,
+.portfolio-showcase__intro h3 {
+  font-family: var(--display-retro);
+  letter-spacing: -0.02em;
+}
+
+/* 2. Chunky style for main buttons */
+.arrival-scene .story-link--primary,
+.ending-scene__actions .story-link,
+.scene-nav--desktop button,
+.scene-nav--mobile select {
+  box-sizing: border-box;
+}
+
+.arrival-scene .story-link--primary,
+.ending-scene__actions .story-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 10px 22px;
+  border: 2px solid var(--amber) !important;
+  border-radius: 8px;
+  background: var(--night-blue);
+  color: var(--cream) !important;
+  box-shadow: 3px 3px 0px var(--amber);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+
+.arrival-scene .story-link--primary:hover,
+.ending-scene__actions .story-link:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px var(--amber);
+  background: #313a68;
+  color: var(--cream) !important;
+}
+
+.arrival-scene .story-link--primary:active,
+.ending-scene__actions .story-link:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px var(--amber);
+}
+
+.arrival-scene .story-link--primary .story-link__rule {
+  display: none;
+}
+
+.scene-nav--desktop button {
+  padding: 5px 10px;
+  border: 1.5px solid rgba(242, 189, 120, 0.35);
+  border-radius: 6px;
+  background: var(--deep-navy);
+  box-shadow: 2px 2px 0px rgba(242, 189, 120, 0.35);
+  margin-bottom: 6px;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.scene-nav--desktop button:hover,
+.scene-nav--desktop button:focus-visible {
+  border-color: var(--amber);
+  box-shadow: 3px 3px 0px var(--amber);
+  transform: translate(-1px, -1px);
+}
+
+.scene-nav--desktop button.is-current {
+  border-color: var(--amber);
+  box-shadow: 2px 2px 0px var(--amber);
+  background: var(--night-blue);
+}
+
+.scene-nav--mobile select {
+  border: 2px solid var(--amber) !important;
+  border-radius: 8px !important;
+  box-shadow: 3px 3px 0px var(--amber) !important;
+  background: var(--deep-navy) !important;
+}
+
+/* 3. Scrolling marquee strip */
+.retro-marquee {
+  width: 100%;
+  overflow: hidden;
+  background: #13182e;
+  border-top: 1px dashed var(--line);
+  border-bottom: 1px dashed var(--line);
+  padding: 8px 0;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.retro-marquee__track {
+  display: inline-flex;
+  animation: retro-marquee-scroll 24s linear infinite;
+}
+
+.retro-marquee:hover .retro-marquee__track {
+  animation-play-state: paused;
+}
+
+.retro-marquee span {
+  display: inline-block;
+  color: var(--amber);
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@keyframes retro-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* 4. Visitor-style odometer in footer */
+.retro-odometer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: #0d1020;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.retro-odometer__label {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.retro-odometer__counter {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.retro-odometer__digit {
+  display: inline-block;
+  min-width: 15px;
+  padding: 1px 3px;
+  background: #080a14;
+  border: 1px solid rgba(242, 189, 120, 0.45);
+  border-radius: 2px;
+  color: var(--amber);
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .arrival-scene .story-link--primary,
+  .ending-scene__actions .story-link,
+  .scene-nav--desktop button {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .retro-marquee__track {
+    animation: none !important;
+    display: block;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .retro-marquee span:nth-child(n + 2) {
+    display: none;
+  }
+}

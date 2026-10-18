@@ -22,9 +22,37 @@ const sceneNarration: Partial<Record<SceneId, AudioNarrationId>> = {
   ending: 'goodnight',
 }
 
+const DREAMS_STORAGE_KEY = 'pip-dreams-delivered-count'
+
+function getInitialInteractionCount(): number {
+  try {
+    const saved = localStorage.getItem(DREAMS_STORAGE_KEY)
+    if (saved) {
+      const parsed = parseInt(saved, 10)
+      if (!isNaN(parsed) && parsed >= 0) return parsed
+    }
+  } catch {
+    // localStorage unavailable
+  }
+  return 0
+}
+
 export default function App() {
   const { activeScene, goToScene } = useSceneNavigation()
   const { pipState, react: reactPip, reset: resetPip } = usePipState()
+  const [interactionCount, setInteractionCount] = useState<number>(getInitialInteractionCount)
+
+  const incrementInteractionCount = useCallback(() => {
+    setInteractionCount((prev) => {
+      const next = prev + 1
+      try {
+        localStorage.setItem(DREAMS_STORAGE_KEY, String(next))
+      } catch {
+        // localStorage write error ignored
+      }
+      return next
+    })
+  }, [])
   const {
     muted,
     masterVolume,
@@ -86,26 +114,28 @@ export default function App() {
     const now = Date.now()
     if (now - lastInteractionAt.current < 420) return
     lastInteractionAt.current = now
+    incrementInteractionCount()
     const reaction = pipReactions[pipReactionIndex.current % pipReactions.length]
     const shouldPlayCue = pipReactionIndex.current % 3 === 0
     pipReactionIndex.current += 1
     reactPip(reaction.state)
     setStoryWhisper(reaction.message)
     if (shouldPlayCue) playPipReaction(reaction.state)
-  }, [playPipReaction, reactPip, unlockAudio])
+  }, [incrementInteractionCount, playPipReaction, reactPip, unlockAudio])
 
   const handleObjectActivate = useCallback((objectId: string) => {
     unlockAudio()
     const now = Date.now()
     if (now - lastInteractionAt.current < 420) return
     lastInteractionAt.current = now
+    incrementInteractionCount()
     setActivatedObjects((previous) => new Set(previous).add(objectId))
     const story = objectStories[objectId]
     if (!story) return
     reactPip(story.state)
     setStoryWhisper(story.message)
     playInteraction(story.soundId)
-  }, [playInteraction, reactPip, unlockAudio])
+  }, [incrementInteractionCount, playInteraction, reactPip, unlockAudio])
 
   const revealSecret = useCallback(() => {
     unlockAudio()
@@ -183,9 +213,23 @@ export default function App() {
       </main>
 
       <div className="story-whisper story-whisper--global" aria-live="polite" role="status">{storyWhisper}</div>
+      <aside className="retro-marquee" aria-label="Nursery bulletin">
+        <div className="retro-marquee__track">
+          <span>Welcome to Pip&apos;s Midnight Nursery! ✦ Please sign no one&apos;s dreams without permission ✦ Best viewed with sleepy eyes ✦ &nbsp;</span>
+          <span>Welcome to Pip&apos;s Midnight Nursery! ✦ Please sign no one&apos;s dreams without permission ✦ Best viewed with sleepy eyes ✦ &nbsp;</span>
+        </div>
+      </aside>
       <footer className="site-footer">
         <div className="site-footer__main">
           <span>Made for the quiet hours.</span>
+          <div className="retro-odometer" aria-label={`Dreams delivered: ${interactionCount}`}>
+            <span className="retro-odometer__label">Dreams delivered:</span>
+            <span className="retro-odometer__counter" aria-hidden="true">
+              {String(interactionCount).padStart(5, '0').split('').map((digit, i) => (
+                <span key={i} className="retro-odometer__digit">{digit}</span>
+              ))}
+            </span>
+          </div>
           <span>Goodnight, for now.</span>
         </div>
         <div className="site-footer__credits">
