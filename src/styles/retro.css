@@ -167,6 +167,19 @@
   text-align: center;
 }
 
+/* 5. Easter egg moon button in nursery window */
+button.object-art__moon {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: var(--amber);
+}
+
+button.object-art__moon:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 2px;
+}
+
 /* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
   .arrival-scene .story-link--primary,

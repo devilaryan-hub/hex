@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { InteractiveObject } from '../components/InteractiveObject'
 import { PipCharacter } from '../components/PipCharacter'
 import type { PipState } from '../data/story'
@@ -8,9 +9,23 @@ interface NurserySceneProps {
   pipState: PipState
   onActivate: (objectId: string) => void
   onPipClick: () => void
+  onMoonEasterEgg: () => void
 }
 
-export function NurseryScene({ activated, pipState, onActivate, onPipClick }: NurserySceneProps) {
+export function NurseryScene({ activated, pipState, onActivate, onPipClick, onMoonEasterEgg }: NurserySceneProps) {
+  const moonClicksRef = useRef<number[]>([])
+
+  const handleMoonClick = () => {
+    const now = Date.now()
+    const recent = moonClicksRef.current.filter((t) => now - t < 3500)
+    recent.push(now)
+    moonClicksRef.current = recent
+    if (recent.length >= 5) {
+      moonClicksRef.current = []
+      onMoonEasterEgg()
+    }
+  }
+
   return (
     <section className="story-scene nursery-scene" id="nursery" data-story-scene aria-labelledby="nursery-title">
       <div className="nursery-scene__heading scene-copy">
@@ -22,8 +37,30 @@ export function NurseryScene({ activated, pipState, onActivate, onPipClick }: Nu
         <div className="nursery-stage__wallpaper" aria-hidden="true" />
         <div className="nursery-stage__floor" aria-hidden="true" />
         <div className="nursery-stage__moon" aria-hidden="true" />
-        <InteractiveObject name="Moon window" hint="Look outside at the moon." activated={activated.has('window')} onActivate={() => onActivate('window')} className="room-object--window">
-          <span className="object-art object-art--window"><span className="object-art__moon" /><span className="object-art__star" /></span>
+        <InteractiveObject
+          name="Moon window"
+          hint="Look outside at the moon."
+          activated={activated.has('window')}
+          onActivate={() => {
+            handleMoonClick()
+            onActivate('window')
+          }}
+          className="room-object--window"
+          asDiv
+        >
+          <span className="object-art object-art--window">
+            <button
+              type="button"
+              className="object-art__moon"
+              aria-label="Moon"
+              onClick={(e) => {
+                e.stopPropagation()
+                handleMoonClick()
+                onActivate('window')
+              }}
+            />
+            <span className="object-art__star" aria-hidden="true" />
+          </span>
         </InteractiveObject>
         <InteractiveObject name="Bedside lantern" hint="Turn on a little warmth." activated={activated.has('lamp')} onActivate={() => onActivate('lamp')} className="room-object--lamp">
           <img className="object-art__lantern" src="/assets/pip_dream_lantern.png" alt="" loading="lazy" />

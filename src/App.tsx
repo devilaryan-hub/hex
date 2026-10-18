@@ -137,6 +137,14 @@ export default function App() {
     playInteraction(story.soundId)
   }, [incrementInteractionCount, playInteraction, reactPip, unlockAudio])
 
+  const handleMoonEasterEgg = useCallback(() => {
+    unlockAudio()
+    incrementInteractionCount()
+    reactPip('happy', 3800)
+    setStoryWhisper('The moon hums a quiet, hidden lullaby into the night.')
+    playInteraction('musicBox')
+  }, [incrementInteractionCount, playInteraction, reactPip, unlockAudio])
+
   const revealSecret = useCallback(() => {
     unlockAudio()
     setDiscoveredSecret(true)
@@ -206,7 +214,13 @@ export default function App() {
       <main id="main-content">
         <ArrivalScene onEnter={enterNursery} />
         <MeetPipScene pipState={pipState} onPipClick={handlePipClick} />
-        <NurseryScene activated={activatedObjects} pipState={pipState} onActivate={handleObjectActivate} onPipClick={handlePipClick} />
+        <NurseryScene
+          activated={activatedObjects}
+          pipState={pipState}
+          onActivate={handleObjectActivate}
+          onPipClick={handlePipClick}
+          onMoonEasterEgg={handleMoonEasterEgg}
+        />
         <DreamScene pipState={pipState} onPipClick={handlePipClick} />
         <SecretScene discovered={discoveredSecret} pipState={pipState} onPipClick={handlePipClick} onReveal={revealSecret} />
         <EndingScene pipState={pipState === 'idle' ? 'sleepy' : pipState} onPipClick={handlePipClick} onRevisit={revisitNursery} onReplay={replay} />
